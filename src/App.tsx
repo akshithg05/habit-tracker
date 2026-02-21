@@ -79,10 +79,10 @@ export default function App() {
   return (
     <div className="flex flex-col md:flex-row h-dvh bg-gray-900 text-white overflow-hidden">
       {/* ── Mobile top bar ── */}
-      <div className="flex md:hidden items-center gap-3 px-4 py-3 bg-gray-800 border-b border-gray-700 shrink-0">
+      <div className="flex md:hidden items-center px-4 py-3 bg-gray-800 border-b border-gray-700 shrink-0">
         <button
           onClick={() => setSidebarOpen(true)}
-          className="p-1.5 rounded-lg hover:bg-gray-700 text-gray-300 transition-colors"
+          className="p-1.5 rounded-lg hover:bg-gray-700 text-gray-300 transition-colors shrink-0"
           title="Open menu"
         >
           <svg
@@ -100,16 +100,27 @@ export default function App() {
             />
           </svg>
         </button>
-        <h1 className="flex-1 text-base font-bold tracking-tight">
+        <h1 className="flex-1 text-base font-bold tracking-tight text-center">
           🗓 Habit Tracker
         </h1>
         <button
           onClick={() => setModal({ type: "create" })}
-          className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500
-                     text-sm font-medium transition-colors"
+          title="New habit"
+          className="p-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500
+                     text-white transition-colors shrink-0 flex items-center justify-center"
         >
-          <span className="text-base leading-none">+</span>
-          <span className="hidden xs:inline">New</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-5 h-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+              clipRule="evenodd"
+            />
+          </svg>
         </button>
       </div>
 
