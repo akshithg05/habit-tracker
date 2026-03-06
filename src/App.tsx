@@ -24,6 +24,8 @@ export default function App() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [modal, setModal] = useState<ModalMode>(null);
   const [view, setView] = useState<"calendar" | "heatmap">("calendar");
+  const [calendarYear, setCalendarYear] = useState(() => new Date().getFullYear());
+  const [calendarMonth, setCalendarMonth] = useState(() => new Date().getMonth());
   const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [deleteConfirmHabit, setDeleteConfirmHabit] = useState<Habit | null>(
     null,
@@ -370,6 +372,7 @@ export default function App() {
                 habitType={selectedHabit.type}
                 statuses={selectedHabit.statuses}
                 onDayClick={handleDayClick}
+                onMonthChange={(y, m) => { setCalendarYear(y); setCalendarMonth(m); }}
               />
             ) : (
               <YearHeatmap
@@ -380,6 +383,8 @@ export default function App() {
             <AnalyticsPanel
               habitType={selectedHabit.type}
               statuses={selectedHabit.statuses}
+              calendarYear={calendarYear}
+              calendarMonth={calendarMonth}
             />
           </div>
         ) : (

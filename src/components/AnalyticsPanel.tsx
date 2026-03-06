@@ -69,12 +69,25 @@ function StatCard({ label, value, unit, color }: StatCardProps) {
 interface Props {
   habitType: HabitType;
   statuses: Record<string, DayStatus>;
+  calendarYear: number;
+  calendarMonth: number;
 }
 
-export default function AnalyticsPanel({ habitType, statuses }: Props) {
+export default function AnalyticsPanel({
+  habitType,
+  statuses,
+  calendarYear,
+  calendarMonth,
+}: Props) {
   const now = new Date();
-  const [filterYear, setFilterYear] = useState(now.getFullYear());
-  const [filterMonth, setFilterMonth] = useState(now.getMonth());
+  const [filterYear, setFilterYear] = useState(calendarYear);
+  const [filterMonth, setFilterMonth] = useState(calendarMonth);
+
+  // Keep monthly filter in sync with the calendar displayed above
+  useEffect(() => {
+    setFilterYear(calendarYear);
+    setFilterMonth(calendarMonth);
+  }, [calendarYear, calendarMonth]);
   const [showMonthPicker, setShowMonthPicker] = useState(false);
   const [showYearPicker, setShowYearPicker] = useState(false);
   const monthPickerRef = useRef<HTMLDivElement>(null);

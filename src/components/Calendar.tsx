@@ -93,9 +93,10 @@ interface Props {
   habitType: HabitType;
   statuses: Record<string, DayStatus>;
   onDayClick: (dateKey: string, nextStatus: DayStatus) => void;
+  onMonthChange?: (year: number, month: number) => void;
 }
 
-export default function Calendar({ habitType, statuses, onDayClick }: Props) {
+export default function Calendar({ habitType, statuses, onDayClick, onMonthChange }: Props) {
   const [displayedMonth, setDisplayedMonth] = useState<Date>(
     () => new Date(new Date().getFullYear(), new Date().getMonth(), 1),
   );
@@ -106,6 +107,12 @@ export default function Calendar({ habitType, statuses, onDayClick }: Props) {
 
   const year = displayedMonth.getFullYear();
   const month = displayedMonth.getMonth(); // 0-indexed
+
+  // Notify parent whenever the displayed month/year changes
+  useEffect(() => {
+    onMonthChange?.(year, month);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [year, month]);
 
   const nextDisabled = isCurrentYearMonth(year, month);
   const labels = getLegendLabels(habitType);

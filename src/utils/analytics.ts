@@ -18,12 +18,20 @@ function dateToKey(d: Date): string {
 
 /**
  * Counts consecutive "success" days going backward from today.
- * Any day that is not "success" (fail, empty, or missing key) breaks the streak.
+ * If today hasn't been logged yet, counting starts from yesterday so an
+ * active streak is not broken by an unlogged day.
+ * Any day explicitly marked as "fail" (or "empty") breaks the streak.
  */
 export function calcCurrentStreak(statuses: Record<string, DayStatus>): number {
   const cursor = todayMidnight();
-  let streak = 0;
 
+  // If today is unlogged, don't let it break an otherwise active streak
+  const todayKey = dateToKey(cursor);
+  if (statuses[todayKey] !== "success" && statuses[todayKey] !== "fail") {
+    cursor.setDate(cursor.getDate() - 1);
+  }
+
+  let streak = 0;
   while (true) {
     const key = dateToKey(cursor);
     if (statuses[key] !== "success") break;
